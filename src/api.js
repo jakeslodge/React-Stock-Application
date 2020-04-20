@@ -11,7 +11,7 @@ export class StockSearchRender extends React.Component{
         this.state ={currentSymbol:this.props.toRender,Stockdata:[],loading:true,foundData:false}
     }
 
-    state={currentSymbol:null,Stockdata:[],loading:true,foundData:false}
+    state={currentSymbol:null,Stockdata:[],loading:true,foundData:false,change:"neutral"}
 
     async componentDidMount()
     {
@@ -34,6 +34,19 @@ export class StockSearchRender extends React.Component{
             const data = await responce.json();
             console.log(data);
             this.setState({Stockdata:data,loading:false,foundData:true})
+
+            //lets compare and see if the close is up down or neutral
+            if(data.close == data.open)//neutral
+            {
+                this.setState({change:"neutral"})
+            }
+            else if(data.close > data.open){
+                this.setState({change:"up"})
+            }
+            else if(data.close < data.open){
+                this.setState({change:"down"})
+            }
+
         }
 
         
@@ -53,7 +66,19 @@ export class StockSearchRender extends React.Component{
         }
         else if((!this.state.loading)&&(this.state.foundData)) //yay we got some data lets make it look good
         {
-        return(<div><p>found data {this.state.Stockdata.name}</p></div>);
+        return(
+        <div>
+            <p>found data {this.state.Stockdata.name}</p>
+            <p>{this.state.Stockdata.symbol}</p>
+            <p>{this.state.Stockdata.timestamp}</p>
+            <p>open: {this.state.Stockdata.open}</p>
+            <p>high: {this.state.Stockdata.high}</p>
+            <p>low: {this.state.Stockdata.low}</p>
+        <p>close: {this.state.Stockdata.close} ~ {this.state.change}</p>
+            <p>volume: {this.state.Stockdata.volumes}</p>
+            
+            
+            </div>);
         }
         else{
             return(<div><p>shits broke</p></div>)
@@ -91,13 +116,15 @@ export class StockSearch extends React.Component{
 
         <input type="text" id="name" name="name" value={this.state.searchTerm} onChange={(event) => {
 
-            const x = event.target.value;
+            const x = event.target.value.trim().toUpperCase().slice(0,5);
+            console.log(x);
+            
             if(/[0-9]/.test(x)){
                 this.setState({error:"no numbers"});
             }else{
                 this.setState({error:null});
             }
-            this.setState({searchTerm:event.target.value});
+            this.setState({searchTerm:x});
 
 
         }} />

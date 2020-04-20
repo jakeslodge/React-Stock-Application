@@ -20,6 +20,7 @@ import "ag-grid-community/dist/styles/ag-theme-balham.css";
 import { LoginPage } from './components/LoginPage';
 import {CustomNavbar} from './components/CustomNavbar';
 import {Form,FormControl,Button} from 'react-bootstrap/';
+import { QuoteSearch } from './components/Quote';
 
 
 
@@ -59,6 +60,7 @@ export default function App() {
         <Route exact path ="/Stocks"> <DisplayDefaultStocks/></Route>
         <Route exact path ="/login"> <LoginPage emailSet={updateEmail}/></Route>
         <Route exact path ="/search"><StockSearch/></Route>
+        <Route exact path ="/quotes"><QuoteSearch/></Route>
       </Switch>
 
       </div>
