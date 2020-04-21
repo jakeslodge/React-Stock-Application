@@ -1,6 +1,8 @@
 
 import React from "react";
 import { AgGridReact } from "ag-grid-react/lib/agGridReact";
+import "./stocks.css";
+import { Jumbotron } from "react-bootstrap";
 
 
 
@@ -11,7 +13,7 @@ export class StockSearchRender extends React.Component{
         this.state ={currentSymbol:this.props.toRender,Stockdata:[],loading:true,foundData:false}
     }
 
-    state={currentSymbol:null,Stockdata:[],loading:true,foundData:false,change:"neutral"}
+    state={currentSymbol:null,Stockdata:[],loading:true,foundData:false,change:"neutral",diffValue:0}
 
     async componentDidMount()
     {
@@ -38,13 +40,17 @@ export class StockSearchRender extends React.Component{
             //lets compare and see if the close is up down or neutral
             if(data.close == data.open)//neutral
             {
-                this.setState({change:"neutral"})
+                this.setState({change:" ",diffValue:0})
             }
             else if(data.close > data.open){
-                this.setState({change:"up"})
+                this.setState({change:"+"})
+                var difference = data.close - data.open;
+                this.setState({diffValue:difference.toFixed(2)});
             }
             else if(data.close < data.open){
-                this.setState({change:"down"})
+                this.setState({change:"-"})
+                var difference = data.open - data.close;
+                this.setState({diffValue:difference.toFixed(2)});
             }
 
         }
@@ -61,13 +67,121 @@ export class StockSearchRender extends React.Component{
             return(<div><p>loading request</p></div>);
         }
         else if((!this.state.loading)&&(!this.state.foundData)){
-            return(<div><p>nothing found</p></div>);
+            return(
+            
+              <div class="container-fluid"> 
+              <div class="row">
+                <div class="card">
+                        <div card-header><h1>No Data Found</h1></div>
+              
+                </div>
+              </div>
+              </div>
+            
+            
+            
+            );
 
         }
         else if((!this.state.loading)&&(this.state.foundData)) //yay we got some data lets make it look good
         {
         return(
+
+
+        //lets make this shit look good
         <div>
+
+  
+<div class="container-fluid"> 
+<div class="row">
+  <div class="card">
+          <div card-header><h1>{this.state.Stockdata.name}</h1><h2>{this.state.Stockdata.timestamp.slice(0,10)}</h2></div>
+
+  </div>
+</div>
+</div>
+
+<div class="container-fluid">  
+<div class="row">
+            <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6">
+              <div class="card card-stats">
+                <div class="card-header card-header-warning card-header-icon">
+                  <div class="card-icon">
+                    <i class="material-icons">lock_open</i>
+                  </div>
+                  <p class="card-category">Open</p>
+                  <h3 class="card-title">${this.state.Stockdata.open}
+                    <small></small>
+                  </h3>
+                </div>
+                <div class="card-footer">
+                  <div class="stats">
+                    <i class="material-icons text-warning">warning</i>
+                    <a href="#pablo" class="warning-link">Get More Space...</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6">
+              <div class="card card-stats">
+                <div class="card-header card-header-success card-header-icon">
+                  <div class="m1">
+                  <div class="card-icon">
+                    <i class="material-icons">trending_up</i>
+                  </div>
+                  </div>
+                  <p class="card-category">High</p>
+                  <h3 class="card-title">${this.state.Stockdata.high}</h3>
+                </div>
+                <div class="card-footer">
+                  <div class="stats">
+                    <i class="material-icons">date_range</i> Last 24 Hours
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6">
+              <div class="card card-stats">
+                <div class="card-header card-header-danger card-header-icon">
+                  <div class="m2">
+                  <div class="card-icon">
+                    <i class="material-icons">trending_down</i>
+                  </div>
+                  </div>
+                  <p class="card-category">Low</p>
+                  <h3 class="card-title">${this.state.Stockdata.low}</h3>
+                </div>
+                <div class="card-footer">
+                  <div class="stats">
+                    <i class="material-icons">local_offer</i> Tracked from Github
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6">
+              <div class="card card-stats">
+                <div class="card-header card-header-info card-header-icon">
+                  <div class="m3">
+                  <div class="card-icon">
+                    <i class="fa fa-lock"></i>
+                  </div>
+                  </div>
+                  <p class="card-category">Close</p>
+                  <h3 class="card-title">${this.state.Stockdata.close} ({this.state.change}{this.state.diffValue})</h3>
+                </div>
+                <div class="card-footer">
+                  <div class="stats">
+                    <i class="material-icons">update</i> Just Updated
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+
+
             <p>found data {this.state.Stockdata.name}</p>
             <p>{this.state.Stockdata.symbol}</p>
             <p>{this.state.Stockdata.timestamp}</p>
@@ -79,6 +193,11 @@ export class StockSearchRender extends React.Component{
             
             
             </div>);
+
+
+
+
+            //end of the content
         }
         else{
             return(<div><p>shits broke</p></div>)
@@ -96,21 +215,35 @@ export class StockSearch extends React.Component{
 
 
     state = {
-        searchTerm: "ZZZZ",
+        searchTerm: "AA",
         error:null,
         loading:true,
         url:""
     };
 
+    componentDidMount()
+    {
+      this.setState({searchTerm:"AAL"});
+    }
+
 //<input type="text" id="name" name="name" value={this.state.searchTerm} onChange={(event) => {this.setState({searchTerm:event.target.value});}} />
 
     render(){
         return(
-            <div>
-        <h1>Hello.. {this.state.searchTerm}</h1>
+            <div class="container-fluid">
 
+          <Jumbotron>
+      
+          <h1><span id="wrap">Lookup.. {this.state.searchTerm}</span></h1>
+
+          <p>Search through our stock database to get the most recent snapshot.</p>
+          
+
+
+
+        
         <form>
-        <label htmlFor="name">Your Name:</label>
+        <label htmlFor="name">Stock Symbol&nbsp;</label>
 
 
 
@@ -130,11 +263,11 @@ export class StockSearch extends React.Component{
         }} />
 
         </form>
+        </Jumbotron>
 
         {this.state.error != null ? <p>Error:{this.state.error}</p> : null}
         
         <StockSearchRender toRender = {this.state.searchTerm}/>
-
         </div>
 
        
