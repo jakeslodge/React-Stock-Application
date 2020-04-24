@@ -11,7 +11,8 @@ import {
   Switch,
   Route,
   Link,
-  NavLink
+  NavLink,
+  Redirect
 } from "react-router-dom";
 
 import {DisplayDefaultStocks, StockSearch} from "./api";
@@ -24,6 +25,9 @@ import {CustomNavbar} from './components/CustomNavbar';
 import {Form,FormControl,Button} from 'react-bootstrap/';
 import { QuoteSearch } from './components/Quote';
 import { Header } from './components/Header';
+import { useHistory } from "react-router-dom";
+import {HomePage} from './components/HomePage';
+import { RegisterPage } from './components/RegisterPage';
 
 
 
@@ -35,22 +39,34 @@ export default function App() {
 
 
   //is there an email address logged in
-  const [email,setEmail] = useState("loggedout");
-  const [token,setToken] = useState("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Impha2UxMjNAYXBpLmNvbSIsImV4cCI6MTU4NzQ0MjA4OSwiaWF0IjoxNTg3MzU1Njg5fQ.3Apu6xEPgWIYatGjhJuWxS11TB6AwK_vkfMvqHThXco");
-
+  const [email,setEmail] = useState("a");
+  const [token,setToken] = useState("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Impha2UxMjNAYXBpLmNvbSIsImV4cCI6MTU4Nzc5OTkxOCwiaWF0IjoxNTg3NzEzNTE4fQ.cjsBUWwhN_zj70W08O754DLnZ0QOG2_aGKbhATL4II4");
+  const [loggedIn,setLogin] = useState(false);
 
   const updateEmail = (e) =>{
     setEmail(e);
 
   };
 
+  const updateToken = (e) =>{
+    setToken(e);
+  };
+
+  const updateLogin = (e) =>{
+    setLogin(e);
+  };
+
 
   return (
-    <div className="App">
-      <Header/>
 
+    <div className="App">
+    <Header/>
+    
+    
     <Router>
       <div>
+    
+      <CustomNavbar emailVal ={email} logVal = {loggedIn}/>
 
       <Navbar bg="dark" variant="dark">
       <Navbar.Brand as={Link} to="/">Stock Look</Navbar.Brand>
@@ -64,60 +80,23 @@ export default function App() {
       <Nav.Link as={Link} to="/login">Login</Nav.Link>
       </Nav>
       </Navbar>
+      
 
-
-
-
-      <Link to="/" className="Nav.Link">Home</Link>
-      <Link to="/stocks" className="Nav.Link">Stocks</Link>
-      <Link to="/search">Search</Link>
-      <Link to="/quotes">Quotes</Link>
-      <Link to="/register">Register</Link>
-      <Link to="/login">Login</Link>
 
 
       
 
       <Switch>
+        <Route exact path ="/"><HomePage/></Route>
         <Route exact path ="/Stocks"> <DisplayDefaultStocks/></Route>
-        <Route exact path ="/login"> <LoginPage emailSet={updateEmail}/></Route>
+        <Route exact path ="/login"> <LoginPage loginSet={updateLogin}emailSet={updateEmail}tokenSet={updateToken}/></Route>
         <Route exact path ="/search"><StockSearch/></Route>
-        <Route exact path ="/quotes"><QuoteSearch authToken={token}/></Route>
+        <Route exact path ="/quotes"><QuoteSearch  authToken={token}/></Route>
+        <Route exact path = "/register"><RegisterPage/></Route>
       </Switch>
 
       </div>
     </Router>
-
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-{/* 
-          <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" 
-    integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" 
-    crossOrigin="anonymous"></link>
-
-
-    <CustomNavbar email={email}/>
-    <h1>Home</h1>
-    <button onClick={()=>{setEmail("ayylmao")}}></button>
-    <StockSearch/>
-    <DisplayDefaultStocks/> */}
-
 
     </div>
   );

@@ -78,7 +78,7 @@ body{
 
 
 
-span:after {
+.m1 span:after {
 	content:"_";
 	opacity: 0;
 	animation: cursor 1s infinite;

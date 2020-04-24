@@ -69,9 +69,9 @@ export class StockSearchRender extends React.Component{
         else if((!this.state.loading)&&(!this.state.foundData)){
             return(
             
-              <div class="container-fluid"> 
-              <div class="row">
-                <div class="card">
+              <div className="container-fluid"> 
+              <div className="row">
+                <div className="card">
                         <div card-header><h1>No Data Found</h1></div>
               
                 </div>
@@ -92,107 +92,87 @@ export class StockSearchRender extends React.Component{
         <div>
 
   
-<div class="container-fluid"> 
-<div class="row">
-  <div class="card">
-          <div card-header><h1>{this.state.Stockdata.name}</h1><h2>{this.state.Stockdata.timestamp.slice(0,10)}</h2></div>
+<div className="container-fluid"> 
+<div className="row">
+  <div className="card">
+        <div className="card-header"><h1>{this.state.Stockdata.name}</h1><h2>{this.state.Stockdata.timestamp.slice(0,10)}</h2><h5>Volume: {this.state.Stockdata.volumes}</h5></div>
 
   </div>
 </div>
 </div>
 
-<div class="container-fluid">  
-<div class="row">
-            <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6">
-              <div class="card card-stats">
-                <div class="card-header card-header-warning card-header-icon">
-                  <div class="card-icon">
-                    <i class="material-icons">lock_open</i>
+<div className="container-fluid">  
+<div className="row">
+            <div className="col-xl-3 col-lg-6 col-md-6 col-sm-6">
+              <div className="card card-stats">
+                <div className="card-header card-header-warning card-header-icon">
+                  <div className="card-icon">
+                    <i className="material-icons">lock_open</i>
                   </div>
-                  <p class="card-category">Open</p>
-                  <h3 class="card-title">${this.state.Stockdata.open}
+                  <p className="card-category">Open</p>
+                  <h3 className="card-title">${this.state.Stockdata.open}
                     <small></small>
                   </h3>
                 </div>
-                <div class="card-footer">
-                  <div class="stats">
-                    <i class="material-icons text-warning">warning</i>
-                    <a href="#pablo" class="warning-link">Get More Space...</a>
-                  </div>
+                <div className="card-footer">
+
                 </div>
               </div>
             </div>
-            <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6">
-              <div class="card card-stats">
-                <div class="card-header card-header-success card-header-icon">
-                  <div class="m1">
-                  <div class="card-icon">
-                    <i class="material-icons">trending_up</i>
+            <div className="col-xl-3 col-lg-6 col-md-6 col-sm-6">
+              <div className="card card-stats">
+                <div className="card-header card-header-success card-header-icon">
+                  <div className="m1">
+                  <div className="card-icon">
+                    <i className="material-icons">trending_up</i>
                   </div>
                   </div>
-                  <p class="card-category">High</p>
-                  <h3 class="card-title">${this.state.Stockdata.high}</h3>
+                  <p className="card-category">High</p>
+                  <h3 className="card-title">${this.state.Stockdata.high}</h3>
                 </div>
-                <div class="card-footer">
-                  <div class="stats">
-                    <i class="material-icons">date_range</i> Last 24 Hours
-                  </div>
+                <div className="card-footer">
+
                 </div>
               </div>
             </div>
-            <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6">
-              <div class="card card-stats">
-                <div class="card-header card-header-danger card-header-icon">
-                  <div class="m2">
-                  <div class="card-icon">
-                    <i class="material-icons">trending_down</i>
+            <div className="col-xl-3 col-lg-6 col-md-6 col-sm-6">
+              <div className="card card-stats">
+                <div className="card-header card-header-danger card-header-icon">
+                  <div className="m2">
+                  <div className="card-icon">
+                    <i className="material-icons">trending_down</i>
                   </div>
                   </div>
-                  <p class="card-category">Low</p>
-                  <h3 class="card-title">${this.state.Stockdata.low}</h3>
+                  <p className="card-category">Low</p>
+                  <h3 className="card-title">${this.state.Stockdata.low}</h3>
                 </div>
-                <div class="card-footer">
-                  <div class="stats">
-                    <i class="material-icons">local_offer</i> Tracked from Github
-                  </div>
+                <div className="card-footer">
+
                 </div>
               </div>
             </div>
-            <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6">
-              <div class="card card-stats">
-                <div class="card-header card-header-info card-header-icon">
-                  <div class="m3">
-                  <div class="card-icon">
-                    <i class="fa fa-lock"></i>
+            <div className="col-xl-3 col-lg-6 col-md-6 col-sm-6">
+              <div className="card card-stats">
+                <div className="card-header card-header-info card-header-icon">
+                  <div className="m3">
+                  <div className="card-icon">
+                    <i className="fa fa-lock"></i>
                   </div>
                   </div>
-                  <p class="card-category">Close</p>
-                  <h3 class="card-title">${this.state.Stockdata.close} ({this.state.change}{this.state.diffValue})</h3>
+                  <p className="card-category">Close</p>
+                  <h3 className="card-title">${this.state.Stockdata.close} ({this.state.change}{this.state.diffValue})</h3>
                 </div>
-                <div class="card-footer">
-                  <div class="stats">
-                    <i class="material-icons">update</i> Just Updated
-                  </div>
+                <div className="card-footer">
                 </div>
               </div>
             </div>
           </div>
         </div>
 
-
-
-
-            <p>found data {this.state.Stockdata.name}</p>
-            <p>{this.state.Stockdata.symbol}</p>
-            <p>{this.state.Stockdata.timestamp}</p>
-            <p>open: {this.state.Stockdata.open}</p>
-            <p>high: {this.state.Stockdata.high}</p>
-            <p>low: {this.state.Stockdata.low}</p>
-        <p>close: {this.state.Stockdata.close} ~ {this.state.change}</p>
-            <p>volume: {this.state.Stockdata.volumes}</p>
             
             
-            </div>);
+            </div>
+            );
 
 
 
@@ -230,12 +210,12 @@ export class StockSearch extends React.Component{
 
     render(){
         return(
-            <div class="container-fluid">
+            <div className="container-fluid">
 
           <Jumbotron>
-      
+          <div className="m1">
           <h1><span id="wrap">Lookup.. {this.state.searchTerm}</span></h1>
-
+          </div>
           <p>Search through our stock database to get the most recent snapshot.</p>
           
 

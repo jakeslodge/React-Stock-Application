@@ -1,16 +1,9 @@
-
 import React from "react";
 import "./loginpage.css";
 import{Form,Button, Alert} from "react-bootstrap";
 import { useHistory,Redirect } from "react-router-dom";
 
-export class LoginPage extends React.Component{
-    
-    
-
-    constructor(props){
-        super(props)
-    }
+export class RegisterPage extends React.Component{
 
     state={error:"",email:"",password:"",redirect:false,validRequest:false}
 
@@ -31,7 +24,7 @@ export class LoginPage extends React.Component{
                             <Form onSubmit={(event)=>{event.preventDefault();console.log(this.state.email);
 
                             //lets do  the post request
-                            const res = fetch("http://131.181.190.87:3000/user/login", {
+                            const res = fetch("http://131.181.190.87:3000/user/register", {
                                 method:'POST',
                                 body: JSON.stringify({
                                     email:this.state.email,
@@ -43,9 +36,13 @@ export class LoginPage extends React.Component{
                                 })
                                 
                                 .then((res)=>{
-                                    if(!res.ok){
-                                        this.setState({error:<Alert variant='danger'>Error incorrect password</Alert>});
-                                    }else
+                                    if(res.status===400){
+                                        this.setState({error:<Alert variant='danger'>An email and password are needed!</Alert>});
+                                    }else if(res.status===409)
+                                    {
+                                        this.setState({error:<Alert variant='danger'>That email is already in use</Alert>});
+                                    }
+                                    else
                                     {
                                         this.setState({validRequest:true});
                                         return res.json();
@@ -55,20 +52,20 @@ export class LoginPage extends React.Component{
 
                                     if(this.state.validRequest)
                                     {
-                                    console.log(data.token); // got the token set it to redirect
+                                    console.log(data); // got the token set it to redirect
 
                                     //store the token with our function
-                                    this.props.tokenSet(data.token);
+                                   // this.props.tokenSet(data.token);
 
                                     //set that we are logged in
-                                    this.props.loginSet(true);
+                                   // this.props.loginSet(true);
                                     
                                     //set the logged in email
-                                    this.props.emailSet(this.state.email);
+                                    //this.props.emailSet(this.state.email);
 
                                     //auto redirect
                             
-                                    this.setState({redirect:true});
+                                    //this.setState({redirect:true});
                                     }
                                 })
                                 //.then((res)=>res.json())
@@ -78,7 +75,9 @@ export class LoginPage extends React.Component{
 
 
                             }}>
+                                
                             <Form.Group controlId="formBasicEmail">
+                                <Form.Text><h1>Registration</h1></Form.Text>
                                 <Form.Label>Email address</Form.Label>
                                 
                                 <Form.Control type="email" placeholder="Enter email" onChange={(event) => {
