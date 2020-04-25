@@ -28,6 +28,7 @@ import { Header } from './components/Header';
 import { useHistory } from "react-router-dom";
 import {HomePage} from './components/HomePage';
 import { RegisterPage } from './components/RegisterPage';
+import {OpenGraph} from './components/OpenGraph';
 
 
 
